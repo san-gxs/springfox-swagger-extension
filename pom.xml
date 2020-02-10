@@ -15,10 +15,9 @@
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>springfox-swagger-extension-core</module>
-        <module>springfox-swagger-extension-demo</module>
     </modules>
     <properties>
-        <project.version>1.0.0</project.version>
+        <project.version>1.0.0-SNAPSHOT</project.version>
         <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
         <java.version>1.8</java.version>
         <eclipse.jetty.version>9.4.24.v20191120</eclipse.jetty.version>
