@@ -7,24 +7,18 @@ import com.talor.core.provider.DubboApiRequestHandlerProvider;
 import com.talor.core.reader.ApiListingTagReader;
 import com.talor.core.reader.ModelReader;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Condition;
+import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
+import org.springframework.core.type.AnnotatedTypeMetadata;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.Defaults;
-import springfox.documentation.spring.web.DescriptionResolver;
-import springfox.documentation.spring.web.DocumentationCache;
-import springfox.documentation.spring.web.ObjectMapperConfigurer;
-import springfox.documentation.spring.web.json.JacksonModuleRegistrar;
-import springfox.documentation.spring.web.json.JsonSerializer;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.spring.web.readers.operation.HandlerMethodResolver;
-import springfox.documentation.swagger2.configuration.Swagger2JacksonModule;
-
-import java.util.List;
+import springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration;
 
 /**
  * @author luffy
@@ -46,7 +40,7 @@ public class SpringFoxExtConfig {
                 .build();
     }
 
-    private ApiInfo buildApiInfo(){
+    private ApiInfo buildApiInfo() {
         return new ApiInfoBuilder()
                 .title("api")
                 .description("see api details when you need")
@@ -55,41 +49,42 @@ public class SpringFoxExtConfig {
                 .build();
     }
 
-    @Bean
-    public HandlerMethodResolver methodResolver(TypeResolver resolver) {
-        return new HandlerMethodResolver(resolver);
-    }
+//    @Bean
+//    @Primary
+//    public HandlerMethodResolver methodResolver(TypeResolver resolver) {
+//        return new HandlerMethodResolver(resolver);
+//    }
+//
+//    @Bean
+//    public static ObjectMapperConfigurer objectMapperConfigurer() {
+//        return new ObjectMapperConfigurer();
+//    }
+//
+//    @Bean
+//    public Defaults defaults() {
+//        return new Defaults();
+//    }
 
-    @Bean
-    public static ObjectMapperConfigurer objectMapperConfigurer() {
-        return new ObjectMapperConfigurer();
-    }
 
-    @Bean
-    public Defaults defaults() {
-        return new Defaults();
-    }
+//    @Bean
+//    public DocumentationCache resourceGroupCache() {
+//        return new DocumentationCache();
+//    }
 
+//    @Bean
+//    public JsonSerializer jsonSerializer(List<JacksonModuleRegistrar> moduleRegistrars) {
+//        return new JsonSerializer(moduleRegistrars);
+//    }
 
-    @Bean
-    public DocumentationCache resourceGroupCache() {
-        return new DocumentationCache();
-    }
-
-    @Bean
-    public JsonSerializer jsonSerializer(List<JacksonModuleRegistrar> moduleRegistrars) {
-        return new JsonSerializer(moduleRegistrars);
-    }
-
-    @Bean
-    public JacksonModuleRegistrar swagger2Module() {
-        return new Swagger2JacksonModule();
-    }
-
-    @Bean
-    public DescriptionResolver descriptionResolver(Environment environment) {
-        return new DescriptionResolver(environment);
-    }
+//    @Bean
+//    public JacksonModuleRegistrar swagger2Module() {
+//        return new Swagger2JacksonModule();
+//    }
+//
+//    @Bean
+//    public DescriptionResolver descriptionResolver(Environment environment) {
+//        return new DescriptionResolver(environment);
+//    }
 
 
     @Bean
@@ -112,5 +107,13 @@ public class SpringFoxExtConfig {
         return new ApiMethodModelsProvider(typeResolver);
     }
 
+
+    static final class EnableSwagger2MissingConditional implements Condition {
+        @Override
+        public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+            // Non-spring Boot applications do not add @EnableSwagger2 to enable this configuration
+            return !context.getRegistry().containsBeanDefinition(Swagger2DocumentationConfiguration.class.getName());
+        }
+    }
 
 }

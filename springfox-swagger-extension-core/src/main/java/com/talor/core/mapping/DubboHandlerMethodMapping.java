@@ -7,12 +7,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.MethodIntrospector;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.util.ClassUtils;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.AbstractHandlerMethodMapping;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
-import springfox.documentation.spi.service.contexts.Defaults;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -23,9 +20,7 @@ import javax.ws.rs.core.MediaType;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author luffy
@@ -47,11 +42,41 @@ public class DubboHandlerMethodMapping<T> extends AbstractHandlerMethodMapping<R
 
     @Override
     protected boolean isHandler(Class<?> beanType) {
-        return org.apache.dubbo.config.spring.ServiceBean.class.isAssignableFrom(beanType) ||
-                com.alibaba.dubbo.config.spring.ServiceBean.class.isAssignableFrom(beanType) ||
-                AnnotatedElementUtils.hasAnnotation(beanType, com.alibaba.dubbo.config.annotation.Service.class) ||
-                AnnotatedElementUtils.hasAnnotation(beanType, org.apache.dubbo.config.annotation.Service.class)
-                ;
+        return isApacheServiceBean(beanType) ||
+                isAlibabaServiceBean(beanType) ||
+                hasDubboServiceAnnotation(beanType);
+    }
+
+    private boolean hasDubboServiceAnnotation(Class<?> beanType){
+        if(Arrays.asList(beanType.getAnnotations()).stream().anyMatch(p ->
+            "org.apache.dubbo.config.annotation.Service".equals(p.annotationType().getName())
+            || "com.alibaba.dubbo.config.annotation.Service".equals(p.annotationType().getCanonicalName()))){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isApacheServiceBean(Class<?> beanType){
+        if(!hasBean("org.apache.dubbo.config.spring.ServiceBean")){
+            return false;
+        }
+        return org.apache.dubbo.config.spring.ServiceBean.class.isAssignableFrom(beanType);
+    }
+
+    private boolean isAlibabaServiceBean(Class<?> beanType){
+        if(!hasBean("com.alibaba.dubbo.config.spring.ServiceBean")){
+            return false;
+        }
+        return com.alibaba.dubbo.config.spring.ServiceBean.class.isAssignableFrom(beanType);
+    }
+
+    private boolean hasBean(String beanName){
+        try{
+            getApplicationContext().getBean(beanName);
+            return true;
+        }catch (Exception ex){
+            return false;
+        }
     }
 
     @Override
