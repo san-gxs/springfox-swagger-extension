@@ -192,7 +192,7 @@
 
     <scm>
         <url>https://github.com/luffytalory</url>
-        <connection>https://github.com/luffytalory/OSSRH-55068.git</connection>
+        <connection>https://github.com/luffytalory/springfox-swagger-extension.git</connection>
     </scm>
 
     <profiles>
