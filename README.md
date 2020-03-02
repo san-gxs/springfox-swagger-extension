@@ -1,5 +1,6 @@
 # srpingfox-swagger-extension
 
+
 ## About
 
 ​		公司内部系统，很多服务是基于dubbox开发的，配置文件很繁琐，接口文档基于confluence进行维护，维护上比较困难，容易断更，还增加了工作量。现有的Swagger2文档
@@ -21,12 +22,12 @@
 
 ## How to use
 
-[1.0.0-SNAPSHOT Demo](https://github.com/luffytalory/srpingfox-swagger-extension/tree/master/springfox-swagger-extension-demo)
+[1.0.3 Demo](https://github.com/luffytalory/springfox-swagger-extension-demo)
 
 
 ## Versions
 
-- 1.0.0-SNAPSHOT
+- 1.0.3
     1. 自动生成dubbo接口文档，同springfox 的JSON API
     2. 接口支持调试，支持泛型调用，解决接口方法多对象传参以及方法重载的问题
     3. 兼容alibaba dubbo 和 apache dubbo
