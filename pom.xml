@@ -30,7 +30,7 @@
         <resteasy.version>3.9.3.Final</resteasy.version>
         <junit.version>4.12</junit.version>
         <springfox.swagger.version>2.9.2</springfox.swagger.version>
-        <guava.version>28.1-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <swagger.jaxrs.version>1.5.24</swagger.jaxrs.version>
         <swagger.core.version>1.6.0</swagger.core.version>
         <swagger-annotation.version>2.0.9</swagger-annotation.version>
