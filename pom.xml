@@ -27,7 +27,7 @@
         <alibaba.dubbo.version>2.6.7</alibaba.dubbo.version>
         <lombok.version>1.18.10</lombok.version>
         <fastjson.version>1.2.62</fastjson.version>
-        <resteasy.version>3.9.3.Final</resteasy.version>
+        <resteasy.version>4.5.7.Final</resteasy.version>
         <junit.version>4.12</junit.version>
         <springfox.swagger.version>2.9.2</springfox.swagger.version>
         <guava.version>28.1-jre</guava.version>
