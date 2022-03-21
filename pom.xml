@@ -24,7 +24,7 @@
         <java.version>1.8</java.version>
         <eclipse.jetty.version>9.4.24.v20191120</eclipse.jetty.version>
         <apache.dubbo.version>2.7.3</apache.dubbo.version>
-        <alibaba.dubbo.version>2.6.7</alibaba.dubbo.version>
+        <alibaba.dubbo.version>2.6.9</alibaba.dubbo.version>
         <lombok.version>1.18.10</lombok.version>
         <fastjson.version>1.2.62</fastjson.version>
         <resteasy.version>3.9.3.Final</resteasy.version>
